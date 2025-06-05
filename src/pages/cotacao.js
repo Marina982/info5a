@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../lib/fetcher';
+import FormFiltro from '../pages/FormFiltro';
 
 export default function Home() {
   const [startDate, setStartDate] = useState('20240101');
@@ -9,12 +10,14 @@ export default function Home() {
 
   const { data, error, isLoading } = useSWR(url, fetcher, { refreshInterval: 5000 });
 
-  const handleSearch = () => {
-    setUrl(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/365?start_date=${startDate}&end_date=${endDate}`);
+  const handleSearch = (start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+    setUrl(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/365?start_date=${start}&end_date=${end}`);
   };
 
   if (error) return <div>Erro ao carregar dados.</div>;
-  if (isLoading || !data) return <div>Carregando...</div>;
+  if (isLoading || !data || !data.USDBRL) return <div>Carregando...</div>;
 
   const usdbrl = data.USDBRL;
 
@@ -22,27 +25,7 @@ export default function Home() {
     <main style={{ padding: '2rem', fontFamily: 'Arial' }}>
       <h1>Cotação Dólar (USD/BRL)</h1>
 
-      <form onSubmit={(e) => e.preventDefault()}>
-        <label>
-          Data Inicial:
-          <input
-            type="text"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            placeholder="YYYYMMDD"
-          />
-        </label>
-        <label>
-          Data Final:
-          <input
-            type="text"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            placeholder="YYYYMMDD"
-          />
-        </label>
-        <button type="button" onClick={handleSearch}>Buscar</button>
-      </form>
+      <FormFiltro onSearch={handleSearch} />
 
       <p><strong>Compra:</strong> R$ {usdbrl.bid}</p>
       <p><strong>Venda:</strong> R$ {usdbrl.ask}</p>
