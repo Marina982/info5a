@@ -13,7 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Olá, mundo! 👋
+          Olá, mundo! 🦖🦕🦎
         </h1>
         <p className={styles.description}>
           Esta é uma aplicação Next.js usando JavaScript.
@@ -21,7 +21,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <p>Feito em Next.js</p>
+        <p></p>
       </footer>
     </div>
   )
