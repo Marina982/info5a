@@ -31,7 +31,7 @@ export default function Cotacao() {
 
   return (
   <main className={styles.container}>
-    <h1 className={styles.title}>Cotação Dólar (USD/BRL)</h1>
+    <h1 className={styles.title}>Cotação Dólar (USD/BRL) 🦖</h1>
 
     <FormFiltro onSearch={handleSearch} />
 
